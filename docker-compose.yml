@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  server:
+    build: ./server
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    
+  client:
+    build: ./client
+    ports:
+      - "1234:1234"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - server
+
+  
+volumes:
+  contactbook:
